@@ -1,0 +1,19 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get install -y libfuse-dev valgrind
+      - uses: actions/checkout@v3
+      - run: ./autogen.sh
+      - run: ./configure
+      - run: ./test-all.sh
+  macos:
+    runs-on: macos-latest
+    steps:
+      - run: brew install automake macos-fuse-t/homebrew-cask/fuse-t
+      - uses: actions/checkout@v3
+      - run: ./autogen.sh
+      - run: ./configure
+      - run: ./test-all.sh
